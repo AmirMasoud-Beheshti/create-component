@@ -1,23 +1,18 @@
 #!/usr/bin/env node
-const fs = require("fs");
-const path = require('path');
-const yargs = require("yargs");
-const { source } = require("../templates/react");
-const Handlebars = require("handlebars");
+import fs from "fs";
+import path from "path";
+import yargs from "yargs/yargs";
+import { createReactComponent } from "./utils.js";
+import { fileURLToPath } from 'url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const template = Handlebars.compile(source);
-const commands = yargs.argv._;
-const [componentName, componentDir] = commands;
+
+const commands = yargs(process.argv.slice(2)).argv._;
+const [componentName, dir] = commands;
 
 if (componentName) {
-  if (componentDir ) {
-    fs.appendFile(
-      `${componentName}.jsx`,
-      template({ name: componentName }),
-      (err) => {
-        console.log(err);
-        throw err;
-      }
-    );
+  if (dir) {
+    const componentPath = path.join(__dirname, dir);
+    createReactComponent(componentPath, componentName);
   }
 }

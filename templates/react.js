@@ -1,10 +1,15 @@
- const source = `import React from 'react'
+export const reactTemplate = `import React from 'react'
+import styles from './{{name}}.module.scss'
+
 const {{name}} = () => {
   return (
-    <div>{{name}}</div>
+    <div className={styles['{{name}}']}>{{name}}</div>
   )
 }
 
-export default {{name}}`
+export default {{name}}`;
 
-module.exports = {source}
+export const cssModuleTemplate = `.{{name}}{
+
+  
+}`
